@@ -2,6 +2,15 @@
 % Stephen Balaban - Lambda Labs
 % 2013-12-14
 
+<div style="text-align: center; font-size: 32px">
+slides can be found at <br />
+<br />
+<br />
+<br />
+<br />
+lambdahats.com/talk-slides.html
+</div>
+
 <style>
 .image {
 	background: black;
@@ -56,14 +65,14 @@ Embarrassing to use voice commands in public.
 ![](images/awkward.jpg)
 </div>
 
-## Unfriendly regulatory environment
+## Unfriendly Regulatory Environment
 
 Google likes banning interesting technology:
 
 * Facial Recognition
 * Adult Entertainment
 
-Nation States like banning interesting things too
+Governments like banning interesting things too:
 
 * No driving while on Glass
 * Stricter privacy regulations in the works
