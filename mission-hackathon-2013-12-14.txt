@@ -62,7 +62,7 @@ Awkward to use touch commands when having a conversation.
 Embarrassing to use voice commands in public.
 
 <div class="image">
-![](images/awkward.jpg)
+<img src="http://static1.businessinsider.com/image/51867598ecad04257e000027/watch-snl-roast-google-glass-in-last-nights-weekend-update-segment.jpg" width=400 />
 </div>
 
 ## Unfriendly Regulatory Environment
@@ -130,13 +130,13 @@ grep lambda
 ## It's already here
 
 <div class="image">
-![](images/mindblown.gif)
+<img src="http://i.imgur.com/j74SykU.gif" width=300 />
 </div>
 
 ## Lambda Hat
 
 <div class="image">
-	<img src="images/lambdahat.jpg" width=400 />
+	<img src="images/lambdahat-sm.jpg" width=400 />
 </div>
 
 * Runs Android and your Glass apps 
