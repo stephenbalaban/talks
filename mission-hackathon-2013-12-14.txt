@@ -144,6 +144,6 @@ grep lambda
 * Fully hackable, OEM unlocked
 
 <div style="text-align: center">
-www.lambdahat.com
+<a href="http://www.lambdahat.com">www.lambdahat.com</a>
 </div>
 
