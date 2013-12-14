@@ -1,0 +1,140 @@
+% Power Management for <br />Always-on Glass Apps
+% Stephen Balaban - Lambda Labs
+% 2013-12-14
+
+<style>
+.image {
+	background: black;
+	text-align: center;
+}
+code {
+	font-size: 12px;
+	line-height: 16px;
+}
+.footer {
+	font-size: 12px;
+}
+</style>
+
+# Challenges
+
+## Low Battery Life
+
+Pitiful 587 mAh battery.
+
+* 1 hour recording video
+* 1.5 hours taking 1 high resolution shot every 4 seconds
+* 8 hours regular use
+
+## Weak Performance
+
+Glass' Dual Core ARM Cortex A9 is under clocked to 400 MHz (from 1GHz)
+
++----------------------------------------+-------------+
+| Single Precision Matrix Multiplication | GFLOPS      |
++========================================+=============+
+| ARM Cortex A9 Dual Core @ 1GHz         | 2.5         |
++----------------------------------------+-------------+
+| PowerVR SGX540 @ 300 MHz               | 3.0-4.0     |
++----------------------------------------+-------------+
+| Desktop NVIDIA GTX 480 @ 700 MHz       | 1,000-1,500 |
++----------------------------------------+-------------+
+
+<div class="footer">
+1. <http://www.anandtech.com/show/4413/ti-announces-omap-4470-and-specs-powervr-sgx544-18-ghz-dual-core-cortexa9>
+2. <http://www.vesperix.com/arm/atlas-arm/bench/gcc-a9/>
+3. <http://www.nordichardware.com/Graphics/nvidia-geforce-gtx-480-the-wait-is-over/GeForce-GTX-400-series-Specifications-and-competition.html>
+</div>
+
+## Usability
+
+Awkward to use touch commands when having a conversation.
+
+Embarrassing to use voice commands in public.
+
+<div class="image">
+![](images/awkward.jpg)
+</div>
+
+## Unfriendly regulatory environment
+
+Google likes banning interesting technology:
+
+* Facial Recognition
+* Adult Entertainment
+
+Nation States like banning interesting things too
+
+* No driving while on Glass
+* Stricter privacy regulations in the works
+
+# Solutions
+
+## Vanilla Android API wakelocks
+
+	PARTIAL_WAKE_LOCK
+	SCREEN_DIM_WAKE_LOCK
+	SCREEN_BRIGHT_WAKE_LOCK
+	FULL_WAKE_LOCK
+	PROXIMITY_SCREEN_OFF_WAKE_LOCK (Undocumented)
+
+Example:
+
+
+```java
+PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+m_wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Lambda");
+m_wakeLock.acquire();
+```
+
+## System PM API (root required)
+
+PowerManager.java writes to a file descriptor for `/sys/power/wake_lock` using
+Java Native Interface (JNI) calls [1, 2, 3]:
+
+	WakeLock.acquire() -> nativeAcquireSuspendblocker() -> acquire_wake_lock()
+
+To quote Douglas McIlroy's 1986 critique of Knuth's WEB: "The following shell script was written on the spot and worked on the first try." [4]
+
+```sh
+echo lambda > /sys/power/wake_lock &&
+cat /proc/wakelocks |
+grep lambda
+```
+
+<div class="footer">
+1. <https://android.googlesource.com/platform/frameworks/base/+/master/services/java/com/android/server/power/PowerManagerService.java>
+2. <https://android.googlesource.com/platform/frameworks/base/+/master/services/jni/com_android_server_power_PowerManagerService.cpp>
+3. <https://android.googlesource.com/platform/hardware/libhardware_legacy/+/android-4.3.1_r1/power/power.c>
+4. <http://onesixtythree.com/literate/literate2.pdf>
+</div>
+
+# Next Steps
+
+## Desirable Properties
+
+* Always-on
+* Discreet
+* Lasts all day
+* Open, hackable
+
+## It's already here
+
+<div class="image">
+![](images/mindblown.gif)
+</div>
+
+## Lambda Hat
+
+<div class="image">
+	<img src="images/lambdahat.jpg" width=400 />
+</div>
+
+* Runs Android and your Glass apps 
+* Can record all day
+* Fully hackable, OEM unlocked
+
+<div style="text-align: center">
+www.lambdahat.com
+</div>
+
