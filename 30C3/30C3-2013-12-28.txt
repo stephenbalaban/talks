@@ -1,5 +1,5 @@
-% Glass Hacks
-% Stephen Balaban <s@lambdal.com>
+% 
+% Stephen Balaban - s@lambdal.com
 % 2013-12-28
 
 <div style="text-align: center; font-size: 32px">
@@ -15,6 +15,7 @@ lambdahat.com/30C3-slides.html
 .image {
 	background: black;
 	text-align: center;
+	padding-top: 5px;
 }
 code {
 	font-size: 12px;
@@ -22,7 +23,201 @@ code {
 }
 .footer {
 	font-size: 12px;
+	margin-left: 40px
+}
+.footer ol, .footer ul {
+	margin-left: 0;
 }
 </style>
+
+## Three things...
+
+1. Increased ability to collect data <br/>(Desktop Computer &lt; Smartphones &lt; Wearable Devices)
+2. Increased ability to process data
+3. Increased ability to violate our privacy
+
+## Today
+
+## History
+
+## What's next?
+
+Logging everything, every second of video, audio, GPS location, IMU data
+More on-device processing, giving you extra-sensory information (think haptic feedback belts but for your eyes)
+
+Massive data
+
+Machine Learning
+
+
+
+A one hour technical lecture that covers everything from machine learning and AI to hardware design and manufacture. Includes demonstrations of applications enabled by an always-on image capturing wearable computer. You'll leave with a clear understanding of the field's status quo, how we got here, and insight into what's around the corner.
+
+Always-on camera enabled wearable computers, like Google Glass and Lambda Hat, enable a variety of slightly creepy, but undeniably useful applications.
+
+For the past few months, I've worn a computing device that takes pictures every few seconds. I run facial detection over the image stream, pulling out every face I have seen. Soon, we'll be able to conduct mass facial recognition using this data. Other applications include detecting license plates and automatically uploading them to a public GPS tagged website.
+
+This talk will cover the history, state of the art, and future of wearable computing, machine learning, and the privacy implication of this technology.
+
+# Challenges
+
+## Low Battery Life
+
+Pitiful 587 mAh battery.
+
+* 1 hour recording video
+* 1.5 hours taking 1 high resolution shot every 4 seconds
+* 8 hours regular use
+
+## Weak Performance
+
+Glass' Dual Core ARM Cortex A9 is under clocked to 400 MHz (from 1GHz)
+
++----------------------------------------+-------------+
+| Single Precision Matrix Multiplication | GFLOPS      |
++========================================+=============+
+| ARM Cortex A9 Dual Core @ 1GHz         | 2.5         |
++----------------------------------------+-------------+
+| PowerVR SGX540 @ 300 MHz               | 3.0-4.0     |
++----------------------------------------+-------------+
+| Desktop NVIDIA GTX 480 @ 700 MHz       | 1,000-1,500 |
++----------------------------------------+-------------+
+
+<div class="footer">
+1. <http://www.anandtech.com/show/4413/ti-announces-omap-4470-and-specs-powervr-sgx544-18-ghz-dual-core-cortexa9>
+2. <http://www.vesperix.com/arm/atlas-arm/bench/gcc-a9/>
+3. <http://www.nordichardware.com/Graphics/nvidia-geforce-gtx-480-the-wait-is-over/GeForce-GTX-400-series-Specifications-and-competition.html>
+</div>
+
+## Usability
+
+Awkward to use touch commands when having a conversation.
+
+Embarrassing to use voice commands in public.
+
+<div class="image">
+<img src="http://static1.businessinsider.com/image/51867598ecad04257e000027/watch-snl-roast-google-glass-in-last-nights-weekend-update-segment.jpg" width=400 />
+</div>
+
+## Deep Learning
+
+You probably remember the "cat detector" paper by Google/Stanford.<sup>[1]</sup> They used 16,000 cores on 1,000 machines for 3 days, their network achieved state-of-the-art results on both the 2009 and 2011 ImageNet datasets.<sup>[2]</sup>
+
+What you might not remember is that Geoff Hinton's group beat those numbers using a handful of GPUs.<sup>[3]</sup>
+
++-----------------------+----------------+---------------+
+| Organization          | Method         | Training Time |
++=======================+================+===============+
+| Google                | 16,000 CPUs    | 3 days        |
++-----------------------+----------------+---------------+
+| University of Toronto | 2 GPUs         | 5-6 days      |
++-----------------------+----------------+---------------+
+
+<div class="footer">
+1. Le Q. V. et al. Building high-level features using large scale unsupervised learning. (2011)
+2. Deng J. et al. Imagenet: A large-scale hierarchical image database. (2009)
+3. Krizhevsky A., Sutskever I., Hinton G. Imagenet classification with deep convolutional neural networks. (2012)
+</div>
+
+## They've been watching
+
+<div class="image">
+<img src="http://1.bp.blogspot.com/-NOI2pZlj0Mc/UAP4tRdz-iI/AAAAAAAAB6Q/0xfGklM2jRE/s1600/shawn-michaels.gif" />
+</div>
+
+### Google
+
+Hires Geoff Hinton's group.
+
+### Facebook
+
+Hires Yann LeCun, Zuck attends NIPS<sup>&dagger;</sup> to hire everyone else.
+
+<div class="footer">
+Neural Information Processing Systems (NIPS)
+</div>
+
+
+## Unfriendly Regulatory Environment
+
+Google likes banning interesting technology:
+
+* Facial Recognition
+* Adult Entertainment
+
+Governments like banning interesting things too:
+
+* No driving while on Glass
+* Stricter privacy regulations in the works
+
+# Solutions
+
+## Vanilla Android API wakelocks
+
+	PARTIAL_WAKE_LOCK
+	SCREEN_DIM_WAKE_LOCK
+	SCREEN_BRIGHT_WAKE_LOCK
+	FULL_WAKE_LOCK
+	PROXIMITY_SCREEN_OFF_WAKE_LOCK (Undocumented)
+
+Example:
+
+
+```java
+PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+m_wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Lambda");
+m_wakeLock.acquire();
+```
+
+## System PM API (root required)
+
+PowerManager.java writes to a file descriptor for `/sys/power/wake_lock` using
+Java Native Interface (JNI) calls [1, 2, 3]:
+
+	WakeLock.acquire() -> nativeAcquireSuspendblocker() -> acquire_wake_lock()
+
+To quote Douglas McIlroy's 1986 critique of Knuth's WEB: "The following shell script was written on the spot and worked on the first try." [4]
+
+```sh
+echo lambda > /sys/power/wake_lock &&
+cat /proc/wakelocks |
+grep lambda
+```
+
+<div class="footer">
+1. <https://android.googlesource.com/platform/frameworks/base/+/master/services/java/com/android/server/power/PowerManagerService.java>
+2. <https://android.googlesource.com/platform/frameworks/base/+/master/services/jni/com_android_server_power_PowerManagerService.cpp>
+3. <https://android.googlesource.com/platform/hardware/libhardware_legacy/+/android-4.3.1_r1/power/power.c>
+4. <http://onesixtythree.com/literate/literate2.pdf>
+</div>
+
+# Next Steps
+
+## Desirable Properties
+
+* Always-on
+* Discreet
+* Lasts all day
+* Open, hackable
+
+## It's already here
+
+<div class="image">
+<img src="http://i.imgur.com/j74SykU.gif" width=300 />
+</div>
+
+## Lambda Hat
+
+<div class="image">
+	<img src="images/lambdahat-sm.jpg" width=400 />
+</div>
+
+* Runs Android and your Glass apps 
+* Can record all day
+* Fully hackable, OEM unlocked
+
+<div style="text-align: center">
+<a href="http://www.lambdahat.com">www.lambdahat.com</a>
+</div>
 
 # Hello!
