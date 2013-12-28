@@ -3,12 +3,17 @@
 % 2013-12-28
 
 <div style="text-align: center; font-size: 32px">
-slides can be found at <br />
+Slides online:<br />
+<br />
+<br />
+<br />
+<a href="https://lambdahat.com/30C3-slides.html">lambdahat.com/30C3-slides.html</a>
 <br />
 <br />
 <br />
 <br />
-lambdahat.com/30C3-slides.html
+Source Code (markdown to dzslides using pandoc): <a href="https://github.com/stephenbalaban/talks">github.com/stephenbalaban/talks</a>
+
 </div>
 
 <style>
@@ -28,40 +33,101 @@ code {
 .footer ol, .footer ul {
 	margin-left: 0;
 }
+.center {
+	text-align: center;
+	margin: 0 auto;
+}
 </style>
 
-## Three things...
 
-1. Increased ability to collect data <br/>(Desktop Computer &lt; Smartphones &lt; Wearable Devices)
-2. Increased ability to process data
-3. Increased ability to violate our privacy
+## Three things to keep in mind.
 
-## Today
+<br />
+<br />
+
+### Increased ability to collect data
+### Increased ability to process data
+### Increased ability to violate our privacy
 
 ## History
 
-## What's next?
+Edward O. Thorp, in a 1998 paper, refers to himself as conceiving the first "wearable computer" in 1955. Collaborating with Claude Shannon in 1960-61 to beat the house at roulette.<sup>[1]</sup>
 
-Logging everything, every second of video, audio, GPS location, IMU data
-More on-device processing, giving you extra-sensory information (think haptic feedback belts but for your eyes)
+A Bell Canada IP address edited the Wikipedia article for Wearable Computing to ensure that the working definition solidifies Steve Mann as the inventor.<sup>[2]</sup>
 
-Massive data
+<div class="footer">
+1. Thorp, Edward O. "The invention of the first wearable computer." Wearable Computers, 1998.
+2. <https://en.wikipedia.org/wiki/Special:Contributions/69.158.43.128>
+</div>
 
-Machine Learning
+## Steve Mann
 
+<div class="image">
+	<img src="images/steve-mann.jpg" alt="Steve Mann wearing EyeTap" width="200" />
+</div>
 
+<div class="footer">
+Image courtesy of Steve Mann CC-BY-SA 3.0
+</div>
 
-A one hour technical lecture that covers everything from machine learning and AI to hardware design and manufacture. Includes demonstrations of applications enabled by an always-on image capturing wearable computer. You'll leave with a clear understanding of the field's status quo, how we got here, and insight into what's around the corner.
+## Data Collection
 
-Always-on camera enabled wearable computers, like Google Glass and Lambda Hat, enable a variety of slightly creepy, but undeniably useful applications.
+### Today
 
-For the past few months, I've worn a computing device that takes pictures every few seconds. I run facial detection over the image stream, pulling out every face I have seen. Soon, we'll be able to conduct mass facial recognition using this data. Other applications include detecting license plates and automatically uploading them to a public GPS tagged website.
+Logging some things: photos, messages, location data.
 
-This talk will cover the history, state of the art, and future of wearable computing, machine learning, and the privacy implication of this technology.
+Heavy lifting done on a server due to energy and computational limitations. (Face.com, Siri, etc.)
 
-# Challenges
+### Soon
 
-## Low Battery Life
+Logging everything. Every second of video, audio, GPS location, IMU data.
+
+More real-time, on-device processing.
+
+# What is Google Glass?
+
+## An Android Phone on Your Face
+
+<div class="image">
+<img src="images/glass_sm.jpg" alt="Google Glass" width="200" />
+</div>
+
+OEM unlocked bootloader
+
+Android 4.0.x
+
+TI OMAP 4430 (Same as Pandaboard A1/A2, SGSII)
+
+<div class="footer">
+1. <http://www.saurik.com/id/16>
+2.  Picture from Star Simpson's and Scott Torborg's terrific <a href="http://catwig.com/google-glass-teardown/">Google Glass Teardown</a>, CC-BY-NC-SA 3.0
+</div>
+
+## Performance
+
+Glass' Dual Core ARM Cortex A9 is under clocked to 400 MHz (from 1GHz)
+
++----------------------------------------+-----------------+
+| Single Precision Matrix Multiplication | GFLOPS          |
++========================================+=================+
+| ARM Cortex A9 Dual Core @ 1GHz         | 2.5             |
++----------------------------------------+-----------------+
+| PowerVR SGX540 @ 300 MHz               | 3.0-4.0         |
++----------------------------------------+-----------------+
+| Desktop NVIDIA GTX 480 @ 700 MHz       | 1,000.0-1,500.0 |
++----------------------------------------+-----------------+
+
+<div class="footer">
+1. <http://www.anandtech.com/show/4413/ti-announces-omap-4470-and-specs-powervr-sgx544-18-ghz-dual-core-cortexa9>
+2. <http://www.vesperix.com/arm/atlas-arm/bench/gcc-a9/>
+3. <http://www.nordichardware.com/Graphics/nvidia-geforce-gtx-480-the-wait-is-over/GeForce-GTX-400-series-Specifications-and-competition.html>
+</div>
+
+## Battery Life
+
+<div class="image">
+	<img src="images/battery_sm.jpg" width=320 />
+</div>
 
 Pitiful 587 mAh battery.
 
@@ -69,24 +135,8 @@ Pitiful 587 mAh battery.
 * 1.5 hours taking 1 high resolution shot every 4 seconds
 * 8 hours regular use
 
-## Weak Performance
-
-Glass' Dual Core ARM Cortex A9 is under clocked to 400 MHz (from 1GHz)
-
-+----------------------------------------+-------------+
-| Single Precision Matrix Multiplication | GFLOPS      |
-+========================================+=============+
-| ARM Cortex A9 Dual Core @ 1GHz         | 2.5         |
-+----------------------------------------+-------------+
-| PowerVR SGX540 @ 300 MHz               | 3.0-4.0     |
-+----------------------------------------+-------------+
-| Desktop NVIDIA GTX 480 @ 700 MHz       | 1,000-1,500 |
-+----------------------------------------+-------------+
-
 <div class="footer">
-1. <http://www.anandtech.com/show/4413/ti-announces-omap-4470-and-specs-powervr-sgx544-18-ghz-dual-core-cortexa9>
-2. <http://www.vesperix.com/arm/atlas-arm/bench/gcc-a9/>
-3. <http://www.nordichardware.com/Graphics/nvidia-geforce-gtx-480-the-wait-is-over/GeForce-GTX-400-series-Specifications-and-competition.html>
+	Picture courtesy of <a href="http://catwig.com/google-glass-teardown/">Google Glass Teardown</a>, CC-BY-NC-SA 3.0
 </div>
 
 ## Usability
@@ -99,60 +149,81 @@ Embarrassing to use voice commands in public.
 <img src="http://static1.businessinsider.com/image/51867598ecad04257e000027/watch-snl-roast-google-glass-in-last-nights-weekend-update-segment.jpg" width=400 />
 </div>
 
-## Deep Learning
 
-You probably remember the "cat detector" paper by Google/Stanford.<sup>[1]</sup> They used 16,000 cores on 1,000 machines for 3 days, their network achieved state-of-the-art results on both the 2009 and 2011 ImageNet datasets.<sup>[2]</sup>
+# Fun &amp; Frightening Hacks
 
-What you might not remember is that Geoff Hinton's group beat those numbers using a handful of GPUs.<sup>[3]</sup>
-
-+-----------------------+----------------+---------------+
-| Organization          | Method         | Training Time |
-+=======================+================+===============+
-| Google                | 16,000 CPUs    | 3 days        |
-+-----------------------+----------------+---------------+
-| University of Toronto | 2 GPUs         | 5-6 days      |
-+-----------------------+----------------+---------------+
-
-<div class="footer">
-1. Le Q. V. et al. Building high-level features using large scale unsupervised learning. (2011)
-2. Deng J. et al. Imagenet: A large-scale hierarchical image database. (2009)
-3. Krizhevsky A., Sutskever I., Hinton G. Imagenet classification with deep convolutional neural networks. (2012)
-</div>
-
-## They've been watching
+## "Sideloading" Apps
 
 <div class="image">
-<img src="http://1.bp.blogspot.com/-NOI2pZlj0Mc/UAP4tRdz-iI/AAAAAAAAB6Q/0xfGklM2jRE/s1600/shawn-michaels.gif" />
+	<img src="images/logo-rg.png" alt="LambdaHat" width="133" /><br/>
 </div>
 
-### Google
+Railgun (like Trebuchet) is a custom Android launcher app.
 
-Hires Geoff Hinton's group.
+<!--
+<div class="center">
+<br />
+Source Code:<br/>
+<https://github.com/lambdal/Railgun>
+<br />
+<br />
+<br />
+</div>
+-->
 
-### Facebook
+## Secret Picture Taking
 
-Hires Yann LeCun, Zuck attends NIPS<sup>&dagger;</sup> to hire everyone else.
+<div class="image">
+	<img src="images/glass-prism-close-front_sm.jpg" alt="As you can see, no recording LED" width="400" />
+</div>
+
+<!--
+<div class="center">
+<br />
+Source Code:<br/>
+<https://github.com/lambdal/MindCap>
+<br />
+<br />
+<br />
+</div>
+-->
 
 <div class="footer">
-Neural Information Processing Systems (NIPS)
+	<a href="http://catwig.com/google-glass-teardown/">Google Glass Teardown</a>, CC-BY-NC-SA 3.0
 </div>
 
+## Facial Recognition
 
-## Unfriendly Regulatory Environment
+<div class="image">
+	<img src="images/facerec_sm.png" alt="FaceRec running on Glass" width="400" />
+</div>
 
-Google likes banning interesting technology:
+<!--
+<div class="center">
+<br />
+Source Code:<br/>
+<https://github.com/lambdal/FaceRec>
+<br />
+<br />
+<br />
+</div>
+-->
 
-* Facial Recognition
-* Adult Entertainment
+<div class="footer">
+	Video demonstration of basic Facial Recognition sideloaded onto Glass: <http://www.youtube.com/watch?v=4L1kfUAeMGE>
+</div>
 
-Governments like banning interesting things too:
+## Number Plate Database
 
-* No driving while on Glass
-* Stricter privacy regulations in the works
+<div class="image">
+	<img src="images/anpr.jpg" alt="French Number Plates" width="200" />
+</div>
 
-# Solutions
+<div class="footer">
+	French Number Plates courtesy of Kaihsu Tai CC-BY-SA 3.0
+</div>
 
-## Vanilla Android API wakelocks
+## Vanilla Android API
 
 	PARTIAL_WAKE_LOCK
 	SCREEN_DIM_WAKE_LOCK
@@ -191,33 +262,118 @@ grep lambda
 4. <http://onesixtythree.com/literate/literate2.pdf>
 </div>
 
-# Next Steps
+## Android / Linux Kernel Power Management Controversy
 
-## Desirable Properties
+Raging on the internet about the above mentioned kernel / user space interface.
 
-* Always-on
-* Discreet
-* Lasts all day
-* Open, hackable
+- LWN article, An alternative to suspend blockers<br /><http://lwn.net/Articles/416690/>
 
-## It's already here
+- Technical Background of the Android Suspend Blockers Controversy<br /><http://lwn.net/images/pdf/suspend_blockers.pdf>
 
-<div class="image">
-<img src="http://i.imgur.com/j74SykU.gif" width=300 />
-</div>
+# The "Always-on" Future
 
-## Lambda Hat
+## Always-on Video
+
+These shots weren't taken with Glass, they were taken with Lambda Hat (Android, all-day battery, no display).
 
 <div class="image">
-	<img src="images/lambdahat-sm.jpg" width=400 />
+<img src="images/lambdahat-sm.jpg" alt="Lambda Hat" />
 </div>
 
-* Runs Android and your Glass apps 
-* Can record all day
-* Fully hackable, OEM unlocked
+## Always-on Audio
 
-<div style="text-align: center">
-<a href="http://www.lambdahat.com">www.lambdahat.com</a>
+Google Moto X
+<div class="image">
+<img src="images/motox.jpg" alt="Motorola X" />
 </div>
 
-# Hello!
+<div class="footer">
+Image by Frmorrison CC-BY-SA 3.0
+</div>
+
+## Deep Learning
+
+You probably remember the "cat detector" paper by Google/Stanford.<sup>[1]</sup> They used 16,000 cores on 1,000 machines for 3 days, their network achieved state-of-the-art results on both the 2009 and 2011 ImageNet datasets.<sup>[2]</sup>
+
+What you might not remember is that Geoff Hinton's group beat those numbers using a handful of GPUs.<sup>[3]</sup>
+
++-----------------------+----------------+---------------+
+| Organization          | Method         | Training Time |
++=======================+================+===============+
+| Google                | 16,000 CPUs    | 3 days        |
++-----------------------+----------------+---------------+
+| University of Toronto | 2 GPUs         | 5-6 days      |
++-----------------------+----------------+---------------+
+
+<div class="footer">
+1. Le Q. V. et al. Building high-level features using large scale unsupervised learning. (2011)
+2. Deng J. et al. Imagenet: A large-scale hierarchical image database. (2009)
+3. Krizhevsky A., Sutskever I., Hinton G. Imagenet classification with deep convolutional neural networks. (2012)
+</div>
+
+## Selling more ads
+
+<div class="image">
+<img src="http://1.bp.blogspot.com/-NOI2pZlj0Mc/UAP4tRdz-iI/AAAAAAAAB6Q/0xfGklM2jRE/s1600/shawn-michaels.gif" />
+</div>
+
+Google "acqui-hires" Geoff Hinton's group.
+
+Facebook hires Yann LeCun, Zuckerberg attends NIPS<sup>&dagger;</sup> to hire everyone else. Mark stated at NIPS that he wants to build a "Theory of Mind" for every user on Facebook.<sup>[1]</sup>
+
+<div class="footer">
+1. <http://blog.explainmydata.com/2013/12/nips-and-zuckerberg-visit.html>
+
+Neural Information Processing Systems (NIPS)
+</div>
+
+## Should we be worried?
+
+A new technology enables us to gather, archive, and process data about ourselves and others like never before.
+
+### Sound familiar?
+
+## The Right to Privacy
+
+<blockquote>
+Instantaneous photographs and newspaper enterprise have invaded the sacred precincts of private and domestic life; and numerous mechanical devices threaten to make good the prediction that "what is whispered in the closet shall be proclaimed from the house-tops."
+</blockquote>
+
+The Right to Privacy, 1890<sup>[1]</sup>
+
+<div class="footer">
+1.  Warren, Samuel D., and Louis D. Brandeis. "The right to privacy." Harvard law review 4.5 (1890). <a href="http://groups.csail.mit.edu/mac/classes/6.805/articles/privacy/Privacy_brand_warr2.html">http://groups.csail.mit.edu/mac/classes/6.805/articles/privacy/Privacy_brand_warr2.html</a>
+</div>
+
+## Neo Brownies?
+
+<div class="center">
+
+1900
+<div class="image">
+<img src="images/brownie_sm.jpg" alt="Kodak Brownie" width="200" />
+</div>
+
+2013
+<div class="image">
+<img src="images/glass_sm.jpg" alt="Google Glass" width="200" />
+<img src="images/lambdahat-sm.jpg" alt="Lambda Hat" width="200" />
+<img src="images/motox.jpg" alt="Motorola X" width="80" />
+</div>
+</div>
+
+## Question Time
+
+<div class="center">
+
+<a href="https://twitter.com/stephenbalaban">
+<img src="images/stephen.jpg" alt="Stephen Balaban" width="133" /><br />
+@stephenbalaban
+</a>
+
+<a href="https://twitter.com/LambdaHat">
+<img src="images/logo.png" alt="LambdaHat" width="133" /><br/>
+@LambdaHat
+</a>
+
+</div>
