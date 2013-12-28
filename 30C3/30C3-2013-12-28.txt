@@ -146,7 +146,7 @@ Awkward to use touch commands when having a conversation.
 Embarrassing to use voice commands in public.
 
 <div class="image">
-<img src="http://static1.businessinsider.com/image/51867598ecad04257e000027/watch-snl-roast-google-glass-in-last-nights-weekend-update-segment.jpg" width=400 />
+<img src="images/snl.jpg" width=400 />
 </div>
 
 
@@ -314,7 +314,7 @@ What you might not remember is that Geoff Hinton's group beat those numbers usin
 ## Selling more ads
 
 <div class="image">
-<img src="http://1.bp.blogspot.com/-NOI2pZlj0Mc/UAP4tRdz-iI/AAAAAAAAB6Q/0xfGklM2jRE/s1600/shawn-michaels.gif" />
+<img src="https://1.bp.blogspot.com/-NOI2pZlj0Mc/UAP4tRdz-iI/AAAAAAAAB6Q/0xfGklM2jRE/s1600/shawn-michaels.gif" />
 </div>
 
 Google "acqui-hires" Geoff Hinton's group.
