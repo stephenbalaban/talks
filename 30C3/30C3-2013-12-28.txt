@@ -12,7 +12,7 @@ Slides online:<br />
 <br />
 <br />
 <br />
-Source Code (markdown to dzslides using pandoc): <a href="https://github.com/stephenbalaban/talks">github.com/stephenbalaban/talks</a>
+Source Code: <a href="https://github.com/lambdal/GlassHacks">github.com/lambdal/GlassHacks</a>.
 
 </div>
 
@@ -160,16 +160,14 @@ Embarrassing to use voice commands in public.
 
 Railgun (like Trebuchet) is a custom Android launcher app.
 
-<!--
 <div class="center">
 <br />
 Source Code:<br/>
-<https://github.com/lambdal/Railgun>
+<https://github.com/lambdal/GlassHacks>
 <br />
 <br />
 <br />
 </div>
--->
 
 ## Secret Picture Taking
 
@@ -177,16 +175,14 @@ Source Code:<br/>
 	<img src="images/glass-prism-close-front_sm.jpg" alt="As you can see, no recording LED" width="400" />
 </div>
 
-<!--
 <div class="center">
 <br />
 Source Code:<br/>
-<https://github.com/lambdal/MindCap>
+<https://github.com/lambdal/GlassHacks>
 <br />
 <br />
 <br />
 </div>
--->
 
 <div class="footer">
 	<a href="http://catwig.com/google-glass-teardown/">Google Glass Teardown</a>, CC-BY-NC-SA 3.0
